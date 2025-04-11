@@ -1,10 +1,24 @@
-import React from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import React, { useState } from "react";
 import logoImg from "../../assets/chatgpt-icon.png";
 import facebookIcon from "../../assets/facebook.png";
 import githubIcon from "../../assets/github.png";
 import googleIcon from "../../assets/google.png";
+import { EyeIcon } from "../../components/EyeIcon";
 
-export const LoginForm = () => {
+export const Route = createFileRoute("/login/")({
+  component: LoginForm,
+});
+
+function LoginForm() {
+  const [type, setType] = useState<string>("password");
+  const [icon, setIcon] = useState<string>("eyeOn");
+
+  const handleShowPassword = () => {
+    setType((prevType) => (prevType === "password" ? "text" : "password"));
+    setIcon((prevIcon) => (prevIcon === "eyeOn" ? "eyeOff" : "eyeOn"));
+  };
+
   return (
     <div className="rounded-[23px] h-[530px] w-[350px] bg-white/4 backdrop-blur-sm border-t border-l border-white/20 shadow-[3px_3px_3px_rgba(238, 208, 208, 0.089)] flex flex-col justify-start items-center p-10">
       <div className="flex flex-row items-center gap-2 pb-8">
@@ -15,16 +29,17 @@ export const LoginForm = () => {
         />
         <h1>ChatBuddy</h1>
       </div>
-      <form className="w-full" method="post">
+      <form className="w-full" method="post" noValidate>
         <h2 className="pb-7">Login</h2>
 
         <div className="relative z-0 mb-5">
           <input
-            type="text"
+            type="email"
             name="email"
             id="email"
             placeholder=" "
-            className="h-[35px] w-full text-sm appearance-none shadow-none outline-none block border-b  dark:border-b-amber-50   dark:focus:border-b-blue-400 focus:ring-0 focus:border-b-blue-600 peer"
+            required
+            className="h-[35px] w-full text-sm appearance-none shadow-none outline-none block border-b  dark:border-b-amber-50   dark:focus:border-b-blue-400 focus:ring-0 focus:border-b-blue-600 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:[&~label]:text-red-500"
           />
           <label
             htmlFor="email"
@@ -36,11 +51,12 @@ export const LoginForm = () => {
 
         <div className="relative z-0 mb-4">
           <input
-            type="text"
+            type={type}
             name="password"
             id="password"
             placeholder=" "
-            className="h-[35px] w-full text-sm appearance-none shadow-none outline-none block border-b  dark:border-b-amber-50   dark:focus:border-b-blue-400 focus:ring-0 focus:border-b-blue-600 peer"
+            required
+            className="h-[35px] w-full pr-[20px] text-sm appearance-none shadow-none outline-none block border-b  dark:border-b-amber-50   dark:focus:border-b-blue-400 focus:ring-0 focus:border-b-blue-600 peer"
           />
           <label
             htmlFor="password"
@@ -48,9 +64,15 @@ export const LoginForm = () => {
           >
             Password
           </label>
+          <span
+            className="cursor-pointer absolute right-0 top-2 hover:[&>svg]:stroke-blue-500 [&>svg]:duration-200"
+            onClick={() => handleShowPassword()}
+          >
+            <EyeIcon icon={icon} />
+          </span>
         </div>
 
-        <p className="text-xs cursor-pointer dark:text-amber-50 duration-200 hover:opacity-85 ">
+        <p className="text-xs w-max cursor-pointer dark:text-amber-50 duration-200 hover:opacity-85">
           Forgot Password?
         </p>
 
@@ -83,11 +105,11 @@ export const LoginForm = () => {
 
         <p className="text-[10px] text-center mt-5">
           Don't have an account yet?{" "}
-          <span className="font-semibold underline cursor-pointer">
+          <Link to="/signup" className="font-semibold underline cursor-pointer">
             Register for free
-          </span>
+          </Link>
         </p>
       </form>
     </div>
   );
-};
+}
