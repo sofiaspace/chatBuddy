@@ -14,6 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as SignupIndexImport } from './routes/signup/index'
 import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as ChatIndexImport } from './routes/chat/index'
+import { Route as PoliciesTermsOfUseImport } from './routes/policies/terms-of-use'
 import { Route as PoliciesPrivacyPolicyImport } from './routes/policies/privacy-policy'
 
 // Create/Update Routes
@@ -33,6 +35,18 @@ const SignupIndexRoute = SignupIndexImport.update({
 const LoginIndexRoute = LoginIndexImport.update({
   id: '/login/',
   path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ChatIndexRoute = ChatIndexImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PoliciesTermsOfUseRoute = PoliciesTermsOfUseImport.update({
+  id: '/policies/terms-of-use',
+  path: '/policies/terms-of-use',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoliciesPrivacyPolicyImport
       parentRoute: typeof rootRoute
     }
+    '/policies/terms-of-use': {
+      id: '/policies/terms-of-use'
+      path: '/policies/terms-of-use'
+      fullPath: '/policies/terms-of-use'
+      preLoaderRoute: typeof PoliciesTermsOfUseImport
+      parentRoute: typeof rootRoute
+    }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/login/': {
       id: '/login/'
       path: '/login'
@@ -82,6 +110,8 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/policies/privacy-policy': typeof PoliciesPrivacyPolicyRoute
+  '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
+  '/chat': typeof ChatIndexRoute
   '/login': typeof LoginIndexRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -89,6 +119,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/policies/privacy-policy': typeof PoliciesPrivacyPolicyRoute
+  '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
+  '/chat': typeof ChatIndexRoute
   '/login': typeof LoginIndexRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -97,22 +129,45 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/policies/privacy-policy': typeof PoliciesPrivacyPolicyRoute
+  '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
+  '/chat/': typeof ChatIndexRoute
   '/login/': typeof LoginIndexRoute
   '/signup/': typeof SignupIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/policies/privacy-policy' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/policies/privacy-policy'
+    | '/policies/terms-of-use'
+    | '/chat'
+    | '/login'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/policies/privacy-policy' | '/login' | '/signup'
-  id: '__root__' | '/' | '/policies/privacy-policy' | '/login/' | '/signup/'
+  to:
+    | '/'
+    | '/policies/privacy-policy'
+    | '/policies/terms-of-use'
+    | '/chat'
+    | '/login'
+    | '/signup'
+  id:
+    | '__root__'
+    | '/'
+    | '/policies/privacy-policy'
+    | '/policies/terms-of-use'
+    | '/chat/'
+    | '/login/'
+    | '/signup/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PoliciesPrivacyPolicyRoute: typeof PoliciesPrivacyPolicyRoute
+  PoliciesTermsOfUseRoute: typeof PoliciesTermsOfUseRoute
+  ChatIndexRoute: typeof ChatIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
 }
@@ -120,6 +175,8 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PoliciesPrivacyPolicyRoute: PoliciesPrivacyPolicyRoute,
+  PoliciesTermsOfUseRoute: PoliciesTermsOfUseRoute,
+  ChatIndexRoute: ChatIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
 }
@@ -136,6 +193,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/policies/privacy-policy",
+        "/policies/terms-of-use",
+        "/chat/",
         "/login/",
         "/signup/"
       ]
@@ -145,6 +204,12 @@ export const routeTree = rootRoute
     },
     "/policies/privacy-policy": {
       "filePath": "policies/privacy-policy.tsx"
+    },
+    "/policies/terms-of-use": {
+      "filePath": "policies/terms-of-use.tsx"
+    },
+    "/chat/": {
+      "filePath": "chat/index.tsx"
     },
     "/login/": {
       "filePath": "login/index.tsx"

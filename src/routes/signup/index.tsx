@@ -8,6 +8,8 @@ export const Route = createFileRoute("/signup/")({
 });
 
 function Signup() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
   const [icon, setIcon] = useState<string>("eyeOn");
   const [confirmType, setConfirmType] = useState<string>("password");
@@ -31,7 +33,7 @@ function Signup() {
         <img
           src={logoImg}
           alt="logo icon"
-          className="w-[40px] h-[40px] animate-logo "
+          className="w-[40px] h-[40px] animate-logo"
         />
         <h1>ChatBuddy</h1>
       </div>
@@ -103,7 +105,7 @@ function Signup() {
 
         <p className="text-xs mt-6">
           By signing up, you consent to ChatBuddy's{" "}
-          <Link target="_blank" to="/">
+          <Link target="_blank" to="/policies/terms-of-use">
             Terms of Use
           </Link>{" "}
           and{" "}

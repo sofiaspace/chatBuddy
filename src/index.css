@@ -20,6 +20,9 @@
   --color-light-blue: #bcd2e8;
 
   --animate-logo: logo-spin infinite 15s linear;
+  --animate-type:
+    typing 8s steps(28) forwards infinite,
+    blink 0.5s step-end infinite alternate;
 
   @keyframes logo-spin {
     from {
@@ -27,6 +30,22 @@
     }
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  @keyframes typing {
+    0%,
+    100% {
+      width: 0;
+    }
+    50% {
+      width: 340px;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      border-color: transparent;
     }
   }
 }

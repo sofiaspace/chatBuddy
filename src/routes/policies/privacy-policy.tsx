@@ -7,7 +7,7 @@ export const Route = createFileRoute("/policies/privacy-policy")({
 
 function RouteComponent() {
   return (
-    <div className="min-h-screen w-full  bg-white text-black  flex flex-col items-center justify-center py-10">
+    <div className="min-h-screen w-full  bg-white text-black  flex flex-col items-center justify-center py-10 px-3">
       <h1 className="my-6">
         <span className="text-4xl">Privacy Polisy</span>
       </h1>
@@ -17,81 +17,100 @@ function RouteComponent() {
           Welcome to ChatBuddy!
         </h2>
         <p>
-          This Privacy Policy outlines how ChatBuddy collects, uses, and
-          protects your personal information. We value your privacy and are
-          committed to safeguarding any information you provide to us. The app
-          is still under development, so no data is collected during this time.
+          This Privacy Policy outlines how ChatBuddy handles user information.
+          This App is a personal, non-commercial project created for educational
+          purposes only. We take your privacy seriously and aim to be fully
+          transparent about how your data is (or isn’t) handled.
         </p>
 
-        <h2 className="font-semibold pt-2">Information we collect</h2>
-        <div>
+        <div className="border-b-1 border-light-blue pb-6">
+          <h2 className="font-semibold pt-2 pb-3">
+            No Personal Data Collection
+          </h2>
           <p>
-            We may collect the following types of information when you use our
-            app:
-          </p>
-          <ul className="list-disc pl-7">
-            <li>
-              <b>Personal Information:</b> This includes information such as
-              your name, email address, or any other personal data you
-              voluntarily provide to us.
-            </li>
-            <li>
-              <b>Usage Data:</b> We may collect information on how the app is
-              accessed and used, including your device information, usage
-              statistics, and logs.
-            </li>
-            <li>
-              <b>Cookies:</b> Our app may use cookies or similar tracking
-              technologies to enhance the user experience and analyze usage
-              patterns.
-            </li>
-          </ul>
-
-          <p className="pt-4 text-sm">
-            <b>Note:</b> Since this app is private and currently for development
-            use only, the collection of personal information is minimal, and no
-            personal data is shared with third parties.
+            We do not collect, store, or share any personally identifiable
+            information (PII). You can use the App without providing any
+            personal data. Even if you choose to sign up, your information is
+            not retained, analyzed, or used for any purpose beyond enabling your
+            access to the App during that session.
           </p>
         </div>
 
-        <h2 className="font-semibold pt-2">How We Use Your Information</h2>
-        <div>
+        <div className="border-b-1 border-light-blue pb-6">
+          <h2 className="font-semibold pt-2 pb-3">
+            How We Use Your Information
+          </h2>
           <p>
-            The information we collect is used solely for the following
-            purposes:
-          </p>
-          <ul className="list-disc pl-7">
-            <li>
-              To provide, maintain, and improve the functionality of our app.
-            </li>
-            <li>To prevent misuse or unauthorized access to the app.</li>
-          </ul>
-
-          <p className="pt-3">
-            We do not share your personal data with third parties
+            This App does not use cookies, analytics tools (like Google
+            Analytics), or any tracking technologies. We do not monitor or log
+            user activity.
           </p>
         </div>
 
-        <h2 className="font-semibold pt-2">Third-Party Links</h2>
-        <p>
-          Our app may contain links to other websites or services. However, we
-          are not responsible for the privacy practices of these third-party
-          sites. We recommend reviewing their privacy policies before providing
-          any personal information.
-        </p>
-
-        <h2 className="font-semibold pt-2">Updates to This Privacy Policy</h2>
-        <p>
-          We may update this Privacy Policy from time to time. When we do, we
-          will update the "Effective Date" at the top of this page. Any changes
-          will be effective immediately upon posting.
-        </p>
-
-        <h2 className="font-semibold pt-2">Contact Us</h2>
-        <div>
+        <div className="border-b-1 border-light-blue pb-6">
+          <h2 className="font-semibold pt-2 pb-3">AI API Usage</h2>
           <p>
-            If you have any questions about this Privacy Policy or how we handle
-            your personal data, feel free to contact us at:
+            The App uses a third-party AI service (such as OpenAI's API) to
+            generate responses based on user input. Your messages are sent to
+            the API temporarily for processing and response generation.
+          </p>
+
+          <ul className="list-disc pl-7">
+            <li>We do not retain these messages.</li>
+            <li>We do not analyze or use them for training.</li>
+            <li>We do not control how the third-party API handles data.</li>
+          </ul>
+
+          <p>
+            Please refer to the privacy policy of the respective AI API provider
+            to understand how they handle your data.
+          </p>
+        </div>
+
+        <div className="border-b-1 border-light-blue pb-6">
+          {" "}
+          <h2 className="font-semibold pt-2 pb-3">
+            Voluntary Account Creation
+          </h2>
+          <p>If the App allows account creation:</p>
+          <ul className="list-disc pl-7">
+            <li>
+              Your credentials or identifiers (if any) are not stored
+              permanently.
+            </li>
+            <li>No profile data or activity logs are kept.</li>
+          </ul>
+          <p>
+            Accounts exist solely to facilitate usage and session continuity
+            during a session.
+          </p>
+        </div>
+
+        <div className="border-b-1 border-light-blue pb-6">
+          <h2 className="font-semibold pt-2 pb-3">Data Security</h2>
+          <p>
+            Even though we do not store data, basic industry-standard practices
+            are followed to secure the infrastructure. However, as this is a
+            personal project, no guarantees can be made regarding absolute
+            security.
+          </p>
+        </div>
+
+        <div className="border-b-1 border-light-blue pb-6">
+          <h2 className="font-semibold pt-2 pb-3">Changes to This Policy</h2>
+          <p>
+            This Privacy Policy may be updated occasionally. Any significant
+            changes will be reflected in the updated version on the App
+            interface or repository. Continued use after such changes means you
+            accept the updated policy.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="font-semibold pt-2 pb-3">Contact Us</h2>
+          <p>
+            If you have any questions or concerns about this Privacy Policy,
+            feel free to contact us at:
           </p>
           <ul className="list-disc pl-7">
             <li>Email: sofia.zengu@gmail.com</li>

@@ -11,6 +11,8 @@ export const Route = createFileRoute("/login/")({
 });
 
 function LoginForm() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
   const [icon, setIcon] = useState<string>("eyeOn");
 
@@ -72,7 +74,7 @@ function LoginForm() {
           </span>
         </div>
 
-        <p className="text-xs w-max cursor-pointer dark:text-amber-50 duration-200 hover:opacity-85">
+        <p className="text-xs w-max cursor-pointer dark:text-amber-50 duration-200 hover:opacity-85 ml-auto">
           Forgot Password?
         </p>
 
