@@ -1,24 +1,46 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Navigate,
+  useNavigate,
+} from "@tanstack/react-router";
 import React, { useState } from "react";
 import logoImg from "../../assets/chatgpt-icon.png";
 import facebookIcon from "../../assets/facebook.png";
 import githubIcon from "../../assets/github.png";
 import googleIcon from "../../assets/google.png";
 import { EyeIcon } from "../../components/EyeIcon";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Route = createFileRoute("/login/")({
   component: LoginForm,
 });
 
 function LoginForm() {
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
   const [icon, setIcon] = useState<string>("eyeOn");
+  const [userError, setuserError] = useState<string>("");
+
+  const { login, validateUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleShowPassword = () => {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
     setIcon((prevIcon) => (prevIcon === "eyeOn" ? "eyeOff" : "eyeOn"));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const success = validateUser(username);
+    if (success) {
+      login(username);
+      navigate({ to: "/chat" });
+    } else {
+      setuserError("Username not found.");
+    }
   };
 
   return (
@@ -31,28 +53,37 @@ function LoginForm() {
         />
         <h1>ChatBuddy</h1>
       </div>
-      <form className="w-full" method="post" noValidate>
+      <form
+        className="w-full h-full flex flex-col"
+        method="post"
+        noValidate
+        onSubmit={handleSubmit}
+      >
         <h2 className="pb-7">Login</h2>
 
         <div className="relative z-0 mb-5">
           <input
-            type="email"
-            name="email"
-            id="email"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            type="text"
+            name="username"
+            id="username"
             placeholder=" "
             required
             className="h-[35px] w-full text-sm appearance-none shadow-none outline-none block border-b  dark:border-b-amber-50   dark:focus:border-b-blue-400 focus:ring-0 focus:border-b-blue-600 peer invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:[&~label]:text-red-500"
           />
           <label
-            htmlFor="email"
+            htmlFor="username"
             className="absolute text-sm text-gray-500 dark:text-amber-50 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
           >
-            Email
+            Username
           </label>
         </div>
 
         <div className="relative z-0 mb-4">
           <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
             type={type}
             name="password"
             id="password"
@@ -78,39 +109,44 @@ function LoginForm() {
           Forgot Password?
         </p>
 
-        <button
-          type="submit"
-          className="w-full mt-10 py-2 rounded-sm bg-light-blue text-[#000c19] font-semibold cursor-pointer"
-        >
-          Sign in
-        </button>
-
-        <p className="my-6 text-center text-xs">or continue with</p>
-
-        <div className="flex flex-row justify-center gap-4">
-          <img
-            src={googleIcon}
-            alt="google icon"
-            className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
-          />
-          <img
-            src={githubIcon}
-            alt="github icon"
-            className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
-          />
-          <img
-            src={facebookIcon}
-            alt="facebook icon"
-            className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
-          />
+        {userError && <p className="text-xs text-red-500">{userError}</p>}
+        <div className="mt-auto">
+          {" "}
+          <button
+            onSubmit={(e) => handleSubmit(e)}
+            type="submit"
+            className="w-full py-2 rounded-sm bg-light-blue text-[#000c19] font-semibold cursor-pointer"
+          >
+            Sign in
+          </button>
+          <p className="my-6 text-center text-xs">or continue with</p>
+          <div className="flex flex-row justify-center gap-4">
+            <img
+              src={googleIcon}
+              alt="google icon"
+              className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
+            />
+            <img
+              src={githubIcon}
+              alt="github icon"
+              className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
+            />
+            <img
+              src={facebookIcon}
+              alt="facebook icon"
+              className="bg-amber-50 px-3 py-2 rounded-sm cursor-pointer"
+            />
+          </div>
+          <p className="text-[10px] text-center mt-5">
+            Don't have an account yet?{" "}
+            <Link
+              to="/signup"
+              className="font-semibold underline cursor-pointer"
+            >
+              Register for free
+            </Link>
+          </p>
         </div>
-
-        <p className="text-[10px] text-center mt-5">
-          Don't have an account yet?{" "}
-          <Link to="/signup" className="font-semibold underline cursor-pointer">
-            Register for free
-          </Link>
-        </p>
       </form>
     </div>
   );

@@ -1,11 +1,7 @@
 import { LoginForm } from "./pages/Login/LoginForm";
 
 function App() {
-  return (
-    <div>
-      <LoginForm />
-    </div>
-  );
+  return <LoginForm />;
 }
 
 export default App;

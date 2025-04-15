@@ -1,7 +1,11 @@
 import React from "react";
 import UserImg from "../assets/user-image.png";
+import { Link } from "@tanstack/react-router";
+import { useAuth } from "../hooks/useAuth";
 
 export const Dashboard = () => {
+  const { logout } = useAuth();
+
   return (
     <div className="w-[380px] pt-4 pb-4  border-r-1 border-[#143d4b]">
       <div className="flex flex-row items-center gap-3 pb-4 pl-4 border-b-1 border-light-blue">
@@ -149,7 +153,13 @@ export const Dashboard = () => {
             />
           </svg>
 
-          <p className="mt-1 text-light-blue text-sm">Logout</p>
+          <Link
+            to="/login"
+            onClick={logout}
+            className="mt-1 text-light-blue text-sm"
+          >
+            Logout
+          </Link>
         </div>
       </div>
     </div>
