@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as SignupIndexImport } from './routes/signup/index'
+import { Route as MyProfileIndexImport } from './routes/my-profile/index'
 import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as ChatIndexImport } from './routes/chat/index'
 import { Route as PoliciesTermsOfUseImport } from './routes/policies/terms-of-use'
@@ -29,6 +30,12 @@ const IndexRoute = IndexImport.update({
 const SignupIndexRoute = SignupIndexImport.update({
   id: '/signup/',
   path: '/signup/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyProfileIndexRoute = MyProfileIndexImport.update({
+  id: '/my-profile/',
+  path: '/my-profile/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
+    '/my-profile/': {
+      id: '/my-profile/'
+      path: '/my-profile'
+      fullPath: '/my-profile'
+      preLoaderRoute: typeof MyProfileIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/signup/': {
       id: '/signup/'
       path: '/signup'
@@ -113,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
   '/chat': typeof ChatIndexRoute
   '/login': typeof LoginIndexRoute
+  '/my-profile': typeof MyProfileIndexRoute
   '/signup': typeof SignupIndexRoute
 }
 
@@ -122,6 +137,7 @@ export interface FileRoutesByTo {
   '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
   '/chat': typeof ChatIndexRoute
   '/login': typeof LoginIndexRoute
+  '/my-profile': typeof MyProfileIndexRoute
   '/signup': typeof SignupIndexRoute
 }
 
@@ -132,6 +148,7 @@ export interface FileRoutesById {
   '/policies/terms-of-use': typeof PoliciesTermsOfUseRoute
   '/chat/': typeof ChatIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/my-profile/': typeof MyProfileIndexRoute
   '/signup/': typeof SignupIndexRoute
 }
 
@@ -143,6 +160,7 @@ export interface FileRouteTypes {
     | '/policies/terms-of-use'
     | '/chat'
     | '/login'
+    | '/my-profile'
     | '/signup'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -151,6 +169,7 @@ export interface FileRouteTypes {
     | '/policies/terms-of-use'
     | '/chat'
     | '/login'
+    | '/my-profile'
     | '/signup'
   id:
     | '__root__'
@@ -159,6 +178,7 @@ export interface FileRouteTypes {
     | '/policies/terms-of-use'
     | '/chat/'
     | '/login/'
+    | '/my-profile/'
     | '/signup/'
   fileRoutesById: FileRoutesById
 }
@@ -169,6 +189,7 @@ export interface RootRouteChildren {
   PoliciesTermsOfUseRoute: typeof PoliciesTermsOfUseRoute
   ChatIndexRoute: typeof ChatIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
+  MyProfileIndexRoute: typeof MyProfileIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
 }
 
@@ -178,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliciesTermsOfUseRoute: PoliciesTermsOfUseRoute,
   ChatIndexRoute: ChatIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
+  MyProfileIndexRoute: MyProfileIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
 }
 
@@ -196,6 +218,7 @@ export const routeTree = rootRoute
         "/policies/terms-of-use",
         "/chat/",
         "/login/",
+        "/my-profile/",
         "/signup/"
       ]
     },
@@ -213,6 +236,9 @@ export const routeTree = rootRoute
     },
     "/login/": {
       "filePath": "login/index.tsx"
+    },
+    "/my-profile/": {
+      "filePath": "my-profile/index.tsx"
     },
     "/signup/": {
       "filePath": "signup/index.tsx"

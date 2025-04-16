@@ -21,7 +21,7 @@ function LoginForm() {
   const [password, setPassword] = useState<string>("");
   const [type, setType] = useState<string>("password");
   const [icon, setIcon] = useState<string>("eyeOn");
-  const [userError, setuserError] = useState<string>("");
+  const [userError, setUserError] = useState<string>("");
 
   const { login, validateUser } = useAuth();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function LoginForm() {
       login(username);
       navigate({ to: "/chat" });
     } else {
-      setuserError("Username not found.");
+      setUserError("Username not found.");
     }
   };
 

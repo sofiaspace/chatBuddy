@@ -3,17 +3,17 @@ import UserImg from "../assets/user-image.png";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "../hooks/useAuth";
 
-export const Dashboard = () => {
-  const { logout } = useAuth();
+export const Sidebar = () => {
+  const { logout, findUsername } = useAuth();
+
+  const username = findUsername();
 
   return (
     <div className="w-[380px] pt-4 pb-4  border-r-1 border-[#143d4b]">
       <div className="flex flex-row items-center gap-3 pb-4 pl-4 border-b-1 border-light-blue">
         <img src={UserImg} alt="user image" className="w-[30px] h-[30px]" />
-        <div>
-          <p className="text-sm">Name Surname</p>
-          <p className="text-xs">Email Adress</p>
-        </div>
+
+        <p className="text-sm">{username}</p>
       </div>
 
       <div className="py-5 px-6 flex flex-col gap-3">
@@ -114,7 +114,12 @@ export const Dashboard = () => {
             />
           </svg>
 
-          <p className="mt-1 text-light-blue text-sm">My Profile</p>
+          <Link
+            to="/my-profile"
+            className="mt-1 !text-light-blue text-sm !font-normal"
+          >
+            My Profile
+          </Link>
         </div>
 
         <div className="flex flex-row items-center gap-6 cursor-pointer">

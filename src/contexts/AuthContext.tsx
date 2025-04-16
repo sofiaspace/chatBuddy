@@ -6,13 +6,12 @@ interface Props {
   logout: () => void;
   signup: (username: string) => void;
   validateUser: (username: string) => boolean;
+  findUsername: () => string;
 }
 
 export const AuthContext = createContext<Props>({} as Props);
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [token, setToken] = useState("");
-
   const signup = (username: string) => {
     const storedUsers = localStorage.getItem("users");
     const users = storedUsers ? JSON.parse(storedUsers) : [];
@@ -60,11 +59,25 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     localStorage.setItem("users", JSON.stringify(logOutUsers));
   };
 
-  const isAuthenticated = !!token;
+  const findUsername = () => {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUser = users.find((user) => user.isLoggedIn == "true");
+
+    return loggedInUser.username;
+  };
+
+  const isAuthenticated = true;
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, signup, validateUser }}
+      value={{
+        isAuthenticated,
+        login,
+        logout,
+        signup,
+        validateUser,
+        findUsername,
+      }}
     >
       {children}
     </AuthContext.Provider>
