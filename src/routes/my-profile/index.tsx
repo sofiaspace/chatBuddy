@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import userImage from "../../assets/user-image.png";
+import { Avatar } from "../../components/Avatar";
 
 export const Route = createFileRoute("/my-profile/")({
   component: RouteComponent,
@@ -10,11 +11,13 @@ export const Route = createFileRoute("/my-profile/")({
 function RouteComponent() {
   const [toggleName, setToggleName] = useState(false);
   const [nickname, setNickname] = useState<string>("");
+  const [isOpenAvatar, setIsOpenAvatar] = useState<boolean>(true);
+
   const { findUsername } = useAuth();
   const username = findUsername();
 
   return (
-    <div className="flex flex-col w-[500px] rounded-[23px] bg-[#0d1725] shadow-[0px_0px_5px_0px_#51555e] py-8">
+    <div className="relative flex flex-col w-[500px] rounded-[23px] bg-[#0d1725] shadow-[0px_0px_5px_0px_#51555e] py-8">
       <div className="w-full flex flex-row items-center gap-4 border-b border-light-blue pb-6 pl-8 relative">
         <img src={userImage} alt="user photo" className="w-[70px] h-[70px] " />
         <div className="bg-white rounded-2xl p-[2px] absolute bottom-5 left-[80px] cursor-pointer">
@@ -70,6 +73,8 @@ function RouteComponent() {
         </div>
       </div>
 
+      {isOpenAvatar && <Avatar user={toggleName ? nickname : username} />}
+
       <div className="flex flex-col px-8">
         <div className="flex flex-row justify-between items-center  py-6 border-b border-[#142338]">
           <p>Username</p>
@@ -89,6 +94,20 @@ function RouteComponent() {
             />
             <label htmlFor="nickname hidden"></label>
           </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col px-8">
+        <div className="flex flex-col py-6">
+          <p>About me</p>
+          <textarea
+            id="about-me"
+            name="about-me"
+            className="mt-3 border-1 p-3 text-sm border-[#142338] focus:border-light-blue focus:outline-none focus:ring-0"
+          ></textarea>
+          <label htmlFor="about-me" className="hidden">
+            About me
+          </label>
         </div>
       </div>
     </div>
