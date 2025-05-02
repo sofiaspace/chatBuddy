@@ -1,18 +1,20 @@
-import { Request, Response, NextFunction } from "express";
-const express = require("express");
-const cors = require("cors");
+import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
+import { AzureKeyCredential } from "@azure/core-auth";
 
-const ModelClient = require("@azure-rest/ai-inference").default;
-const { AzureKeyCredential } = require("@azure/core-auth");
-const { isUnexpected } = require("@azure-rest/ai-inference");
-
-require("dotenv").config();
+dotenv.config();
 
 const app = express();
 
 const endpoint = "https://models.github.ai/inference";
 const model = "openai/gpt-4.1";
 const token = process.env.GITHUB_TOKEN;
+
+if (!token) {
+  throw new Error("GITHUB_TOKEN is not defined in the environment variables.");
+}
 
 const client = ModelClient(endpoint, new AzureKeyCredential(token));
 
