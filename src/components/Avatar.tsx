@@ -1,10 +1,10 @@
 import React, { FC, useState } from "react";
 
-interface Props {
+interface AvatarProps {
   user: string;
 }
 
-export const Avatar: FC<Props> = ({ user }) => {
+export const Avatar: FC<AvatarProps> = ({ user }) => {
   const [color, setColor] = useState<string>("#8f8f8f");
 
   const userInitial = user.split("", 1);

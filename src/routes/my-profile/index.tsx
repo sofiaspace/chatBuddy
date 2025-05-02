@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import userImage from "../../assets/user-image.png";
 import { Avatar } from "../../components/Avatar";
