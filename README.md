@@ -16,6 +16,7 @@ Frontend:
 Backend:
 
 - Express.js
+- Azure (for API inference and cloud services)
 
 <!-- ## Expanding the ESLint configuration
 
