@@ -9,7 +9,6 @@ const { isUnexpected } = require("@azure-rest/ai-inference");
 require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
 
 const endpoint = "https://models.github.ai/inference";
 const model = "openai/gpt-4.1";
@@ -31,16 +30,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(express.json());
-
-// app.post("/api/chat", async (req, res) => {
-//   const { message } = req.body;
-//   console.log("Received message:", message);
-//   res.json({ reply: `You said: ${message}` });
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });
 
 app.post("/api/chat", async (req: Request, res: Response) => {
   const { message } = req.body;
