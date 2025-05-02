@@ -4,11 +4,18 @@ An AI-powered app designed to connect you to AI's knowledge.
 
 Currently in development. Build with:
 
+Frontend:
+
 - React
 - Vite
 - Typescript
 - Tailwind
 - Tanstack Router
+- Axios
+
+Backend:
+
+- Express.js
 
 <!-- ## Expanding the ESLint configuration
 
