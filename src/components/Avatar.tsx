@@ -1,11 +1,23 @@
-import React, { FC, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 interface AvatarProps {
   user: string;
+  setIsOpenAvatar: Dispatch<SetStateAction<boolean>>;
+  isOpenAvatar: boolean;
+  username: string;
 }
 
-export const Avatar: FC<AvatarProps> = ({ user }) => {
+export const Avatar: FC<AvatarProps> = ({
+  user,
+  setIsOpenAvatar,
+  isOpenAvatar,
+  username,
+}) => {
   const [color, setColor] = useState<string>("#8f8f8f");
+
+  const { assignAvatarColor, getAvatarColor } = useAuth();
+  const avatarColor = getAvatarColor(username);
 
   const userInitial = user.split("", 1);
 
@@ -34,11 +46,11 @@ export const Avatar: FC<AvatarProps> = ({ user }) => {
   ];
 
   return (
-    <div className="absolute z-10 top-0 p-8 h-[500px] w-[500px] bg-light-blue rounded-[23px] flex flex-col items-center">
+    <div className="absolute z-10 top-[-5px] left-[-5px] pt-6 pb-4 px-6 h-[510px] w-[510px] bg-[#0d1725] rounded-[23px] flex flex-col items-center">
       <h1 className="py-4">Choose the color for your avatar</h1>
       <div
         className="rounded-full h-[60px] w-[60px] relative"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: avatarColor || color }}
       >
         <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl">
           {userInitial}
@@ -51,13 +63,26 @@ export const Avatar: FC<AvatarProps> = ({ user }) => {
               <div
                 className="rounded-full h-[50px] w-[50px] cursor-pointer"
                 style={{ backgroundColor: hex }}
-                onClick={() => setColor(hex)}
+                onClick={() => {
+                  setColor(hex);
+                  assignAvatarColor(hex, user);
+                }}
                 key={hex}
               ></div>
             ))}
           </div>
         ))}
       </div>
+
+      <button
+        type="button"
+        className="cursor-pointer mt-auto pb-2"
+        onClick={() => {
+          setIsOpenAvatar(!isOpenAvatar);
+        }}
+      >
+        Close
+      </button>
     </div>
   );
 };

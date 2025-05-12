@@ -10,6 +10,8 @@ export const AIChat = () => {
   const handleSend = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (prompt.trim()) fetchData(prompt);
+
+    setPrompt("");
   };
 
   return (

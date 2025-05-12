@@ -14,6 +14,7 @@ export const useFetch = () => {
     try {
       const res = await axios.post(`${API_URL}/api/chat`, { message });
       setData(res.data.reply);
+      console.log(data);
     } catch (err) {
       console.error("Chat error:", err);
       setError(err as string);

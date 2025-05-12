@@ -11,16 +11,39 @@ export const Route = createFileRoute("/my-profile/")({
 function RouteComponent() {
   const [toggleName, setToggleName] = useState(false);
   const [nickname, setNickname] = useState<string>("");
-  const [isOpenAvatar, setIsOpenAvatar] = useState<boolean>(true);
+  const [isOpenAvatar, setIsOpenAvatar] = useState<boolean>(false);
 
-  const { findUsername } = useAuth();
+  const { findUsername, getAvatarColor, assignNickname, findNickname } =
+    useAuth();
   const username = findUsername();
+  const userNickname = findNickname(username);
+  const avatarColor = getAvatarColor(username);
+
+  const userInitial = username.split("", 1);
 
   return (
     <div className="relative flex flex-col w-[500px] rounded-[23px] bg-[#0d1725] shadow-[0px_0px_5px_0px_#51555e] py-8">
       <div className="w-full flex flex-row items-center gap-4 border-b border-light-blue pb-6 pl-8 relative">
-        <img src={userImage} alt="user photo" className="w-[70px] h-[70px] " />
-        <div className="bg-white rounded-2xl p-[2px] absolute bottom-5 left-[80px] cursor-pointer">
+        <div className="w-[70px] h-[70px] rounded-full">
+          {" "}
+          {!avatarColor ? (
+            <img src={userImage} alt="user photo" className="w-full h-full" />
+          ) : (
+            <div
+              style={{ backgroundColor: avatarColor }}
+              className="h-full w-full rounded-full relative"
+            >
+              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl">
+                {userInitial}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div
+          className="bg-white rounded-2xl p-[2px] absolute bottom-5 left-[80px] cursor-pointer"
+          onClick={() => setIsOpenAvatar(!isOpenAvatar)}
+        >
           {" "}
           <svg
             width="22"
@@ -56,10 +79,12 @@ function RouteComponent() {
           <div className="text-center pt-1 pr-16">
             <div className="relative inline-block">
               <input
+                disabled={!nickname}
                 type="checkbox"
                 id="name-toggle"
                 className="hidden peer"
                 onChange={() => setToggleName(!toggleName)}
+                value=""
               />
               <label
                 htmlFor="name-toggle"
@@ -73,7 +98,14 @@ function RouteComponent() {
         </div>
       </div>
 
-      {isOpenAvatar && <Avatar user={toggleName ? nickname : username} />}
+      {isOpenAvatar && (
+        <Avatar
+          user={toggleName ? nickname : username}
+          username={username}
+          setIsOpenAvatar={setIsOpenAvatar}
+          isOpenAvatar={isOpenAvatar}
+        />
+      )}
 
       <div className="flex flex-col px-8">
         <div className="flex flex-row justify-between items-center  py-6 border-b border-[#142338]">
@@ -88,8 +120,12 @@ function RouteComponent() {
               type="text"
               name="nickname"
               id="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              value={userNickname || nickname}
+              onChange={(e) => {
+                const newNickname = e.target.value;
+                setNickname(newNickname);
+                assignNickname(username, newNickname);
+              }}
               className="outline-0 text-right"
             />
             <label htmlFor="nickname hidden"></label>
