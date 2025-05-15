@@ -1,4 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import userImage from "../../assets/user-image.png";
@@ -10,16 +14,26 @@ export const Route = createFileRoute("/my-profile/")({
 
 function RouteComponent() {
   const [toggleName, setToggleName] = useState(false);
-  const [nickname, setNickname] = useState<string>("");
   const [isOpenAvatar, setIsOpenAvatar] = useState<boolean>(false);
 
-  const { findUsername, getAvatarColor, assignNickname, findNickname } =
-    useAuth();
+  const {
+    findUsername,
+    getAvatarColor,
+    assignNickname,
+    findNickname,
+    removeUser,
+  } = useAuth();
   const username = findUsername();
   const userNickname = findNickname(username);
   const avatarColor = getAvatarColor(username);
-
   const userInitial = username.split("", 1);
+
+  const [nickname, setNickname] = useState<string>(() =>
+    findNickname(username)
+  );
+
+  const location = useRouter();
+  const navigate = useNavigate();
 
   return (
     <div className="relative flex flex-col w-[500px] rounded-[23px] bg-[#0d1725] shadow-[0px_0px_5px_0px_#51555e] py-8">
@@ -27,7 +41,7 @@ function RouteComponent() {
         <div className="w-[70px] h-[70px] rounded-full">
           {" "}
           {!avatarColor ? (
-            <img src={userImage} alt="user photo" className="w-full h-full" />
+            <img src={userImage} alt="user photo" className="w-1/2 h-full" />
           ) : (
             <div
               style={{ backgroundColor: avatarColor }}
@@ -146,6 +160,25 @@ function RouteComponent() {
           </label>
         </div>
       </div>
+
+      <button
+        type="button"
+        className="cursor-pointer mb-4 text-red-600 hover:text-red-500"
+        onClick={() => {
+          removeUser(username);
+          navigate({ to: "/signup" });
+        }}
+      >
+        Delete my profile
+      </button>
+
+      <button
+        type="button"
+        onClick={() => location.history.back()}
+        className="cursor-pointer hover:text-amber-50"
+      >
+        Go Back
+      </button>
     </div>
   );
 }

@@ -4,14 +4,27 @@ import { Link } from "@tanstack/react-router";
 import { useAuth } from "../hooks/useAuth";
 
 export const Sidebar = () => {
-  const { logout, findUsername } = useAuth();
+  const { logout, findUsername, getAvatarColor } = useAuth();
 
   const username = findUsername();
+  const color = getAvatarColor(username);
+  const userInitial = username.split("", 1);
 
   return (
     <div className="w-[380px] pt-4 pb-4  border-r-1 border-[#143d4b]">
       <div className="flex flex-row items-center gap-3 pb-4 pl-4 border-b-1 border-light-blue">
-        <img src={UserImg} alt="user image" className="w-[30px] h-[30px]" />
+        {!color ? (
+          <img src={UserImg} alt="user image" className="w-[30px] h-[30px]" />
+        ) : (
+          <div
+            className="rounded-full w-[30px] h-[30px] relative"
+            style={{ backgroundColor: color }}
+          >
+            <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-md">
+              {userInitial}
+            </p>
+          </div>
+        )}
 
         <p className="text-sm">{username}</p>
       </div>

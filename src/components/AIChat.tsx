@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "../assets/chatgpt-icon.png";
 import { useFetch } from "../hooks/useFetch";
+import { useAuth } from "../hooks/useAuth";
 
 export const AIChat = () => {
   const [prompt, setPrompt] = useState<string>("");
@@ -17,6 +18,7 @@ export const AIChat = () => {
   return (
     <div className="py-10 px-14 w-full flex flex-col gap-3 justify-center items-center">
       <img src={Logo} alt="logo" className="w-[50px] h-[50px] animate-logo" />
+
       <h1>Welcome to ChatBuddy!</h1>
 
       <form method="post" className="w-full my-8 relative">

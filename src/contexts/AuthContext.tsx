@@ -11,6 +11,7 @@ interface Props {
   getAvatarColor: (username: string) => string | undefined;
   assignNickname: (username: string, nickname: string) => void;
   findNickname: (nickname: string) => string;
+  removeUser: (username: string) => void;
 }
 
 interface Users {
@@ -82,6 +83,16 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     const loggedInUser = users.find((user: Users) => user.isLoggedIn == true);
 
     return loggedInUser.username;
+  };
+
+  const removeUser = (username: string) => {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+    const updatedUsers = users.filter(
+      (user: Users) => user.username !== username
+    );
+
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   const assignAvatarColor = (hex: string, username: string) => {
@@ -170,6 +181,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         getAvatarColor,
         assignNickname,
         findNickname,
+        removeUser,
       }}
     >
       {children}
